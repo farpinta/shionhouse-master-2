@@ -1,0 +1,242 @@
+[
+    {
+        "id": 1,
+        "name": "Premium Hoodie Model A",
+        "image_url": "assets/img/gallery/arrival2.png",
+        "detail_link": "product_details.html",
+        "rating": 4,
+        "price": 27.5,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 2,
+        "name": "Premium Jacket Model B",
+        "image_url": "assets/img/gallery/arrival3.png",
+        "detail_link": "product_details.html",
+        "rating": 4,
+        "price": 30.0,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 3,
+        "name": "Premium T-Shirt Model C",
+        "image_url": "assets/img/gallery/arrival4.png",
+        "detail_link": "product_details.html",
+        "rating": 5,
+        "price": 32.5,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 4,
+        "name": "Premium Sweater Model D",
+        "image_url": "assets/img/gallery/arrival5.png",
+        "detail_link": "product_details.html",
+        "rating": 4,
+        "price": 35.0,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 5,
+        "name": "Premium Jumper Model E",
+        "image_url": "assets/img/gallery/arrival6.png",
+        "detail_link": "product_details.html",
+        "rating": 4,
+        "price": 37.5,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 6,
+        "name": "Premium Hoodie Model F",
+        "image_url": "assets/img/gallery/arrival7.png",
+        "detail_link": "product_details.html",
+        "rating": 5,
+        "price": 40.0,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 7,
+        "name": "Premium Jacket Model G",
+        "image_url": "assets/img/gallery/arrival8.png",
+        "detail_link": "product_details.html",
+        "rating": 4,
+        "price": 42.5,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 8,
+        "name": "Premium T-Shirt Model H",
+        "image_url": "assets/img/gallery/arrival9.png",
+        "detail_link": "product_details.html",
+        "rating": 4,
+        "price": 45.0,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 9,
+        "name": "Premium Sweater Model I",
+        "image_url": "assets/img/gallery/arrival1.png",
+        "detail_link": "product_details.html",
+        "rating": 5,
+        "price": 47.5,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 10,
+        "name": "Premium Jumper Model J",
+        "image_url": "assets/img/gallery/arrival2.png",
+        "detail_link": "product_details.html",
+        "rating": 4,
+        "price": 50.0,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 11,
+        "name": "Premium Hoodie Model K",
+        "image_url": "assets/img/gallery/arrival3.png",
+        "detail_link": "product_details.html",
+        "rating": 4,
+        "price": 52.5,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 12,
+        "name": "Premium Jacket Model L",
+        "image_url": "assets/img/gallery/arrival4.png",
+        "detail_link": "product_details.html",
+        "rating": 5,
+        "price": 55.0,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 13,
+        "name": "Premium T-Shirt Model M",
+        "image_url": "assets/img/gallery/arrival5.png",
+        "detail_link": "product_details.html",
+        "rating": 4,
+        "price": 57.5,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 14,
+        "name": "Premium Sweater Model N",
+        "image_url": "assets/img/gallery/arrival6.png",
+        "detail_link": "product_details.html",
+        "rating": 4,
+        "price": 60.0,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 15,
+        "name": "Premium Jumper Model O",
+        "image_url": "assets/img/gallery/arrival7.png",
+        "detail_link": "product_details.html",
+        "rating": 5,
+        "price": 62.5,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 16,
+        "name": "Premium Hoodie Model P",
+        "image_url": "assets/img/gallery/arrival8.png",
+        "detail_link": "product_details.html",
+        "rating": 4,
+        "price": 65.0,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 17,
+        "name": "Premium Jacket Model Q",
+        "image_url": "assets/img/gallery/arrival9.png",
+        "detail_link": "product_details.html",
+        "rating": 4,
+        "price": 67.5,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 18,
+        "name": "Premium T-Shirt Model R",
+        "image_url": "assets/img/gallery/arrival1.png",
+        "detail_link": "product_details.html",
+        "rating": 5,
+        "price": 70.0,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 19,
+        "name": "Premium Sweater Model S",
+        "image_url": "assets/img/gallery/arrival2.png",
+        "detail_link": "product_details.html",
+        "rating": 4,
+        "price": 72.5,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 20,
+        "name": "Premium Jumper Model T",
+        "image_url": "assets/img/gallery/arrival3.png",
+        "detail_link": "product_details.html",
+        "rating": 4,
+        "price": 75.0,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 14,
+        "name": "Premium Sweater Model N",
+        "image_url": "assets/img/gallery/arrival6.png",
+        "detail_link": "product_details.html",
+        "rating": 4,
+        "price": 60.0,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 14,
+        "name": "Premium Sweater Model N",
+        "image_url": "assets/img/gallery/arrival6.png",
+        "detail_link": "product_details.html",
+        "rating": 4,
+        "price": 60.0,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 14,
+        "name": "Premium Sweater Model N",
+        "image_url": "assets/img/gallery/arrival6.png",
+        "detail_link": "product_details.html",
+        "rating": 4,
+        "price": 60.0,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    },
+    {
+        "id": 14,
+        "name": "Premium Sweater Model N",
+        "image_url": "assets/img/gallery/arrival6.png",
+        "detail_link": "product_details.html",
+        "rating": 4,
+        "price": 60.0,
+        "currency": "$",
+        "favorit_icon": "assets/img/gallery/favorit-card.png"
+    }
+]
