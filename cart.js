@@ -6,7 +6,7 @@ let cart = JSON.parse(localStorage.getItem('ecommerce_cart')) || [];
 // 2. เลือก Parent container สำหรับ Event Delegation
 const productContainer = document.getElementById('product-container');
 if (!productContainer) {
-  console.warn('⚠️ ไม่พบ #product-container บนหน้านี้ แต่ระบบตะกร้ายังพร้อมทำงานนะ');
+  console.warn('⚠️ ไม่พบ #product-container บนหน้านี้ แต่ระบบตะกร้ายังพร้อมทำงาน');
 } else {
   // ติดตั้ง Event Listener
   productContainer.addEventListener('click', handleAddToCart);
@@ -28,9 +28,8 @@ function handleAddToCart(event) {
   addToCart(productId, productPrice);
 }
 
-// 4. ลอจิกเพิ่มสินค้าลงตะกร้า (ไม่ต้องไปง้อ allProducts แล้ว!)
+// 4. ลอจิกเพิ่มสินค้าลงตะกร้า 
 function addToCart(productID, productPrice) {
-  // ใช้ == เพื่อป้องกันบั๊กกรณีที่ Type เป็น String vs Number
   let existingItem = cart.find(item => item.id == productID);
 
   if (existingItem) {
@@ -45,9 +44,12 @@ function addToCart(productID, productPrice) {
     console.log(`🛒 เพิ่มใหม่: สินค้า ID ${productID} ลงตะกร้าเรียบร้อย`);
   }
 
+  // 1. บันทึกลงตู้เซฟ (โค้ดเดิมของคุณ)
   saveToLocalStorage();
   
-  // 👉 เช็กจุดตายที่ 2: ดูว่าข้อมูลเข้า Array จริงไหม
+  // 👉 2. เติมบรรทัดนี้ลงไป! เพื่อสั่งให้อัปเดตหน้าจอทันทีที่กดเพิ่มของ
+  updateCartUI(); 
+
   console.log("📦 สถานะตะกร้าล่าสุด:", cart);
 }
 
@@ -82,8 +84,40 @@ function loadCart() {
   updateCartUI();
 }
 
-// 📌 อย่าลืมเรียกใช้งานฟังก์ชันนี้ตอนที่หน้าเว็บโหลดเสร็จด้วยนะคะ!
-// เอาโค้ดบรรทัดนี้ไปวางไว้ล่างสุดของไฟล์ cart.js ได้เลย
 document.addEventListener('DOMContentLoaded', () => {
   loadCart();
 });
+
+// 6. ฟังก์ชันอัปเดตหน้าจอ (Distributed UI Synchronization)
+function updateCartUI() {
+  // หาจำนวนสินค้า "ทั้งหมด" ในตะกร้า
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  // หาไอคอนรถเข็นบน Navbar (รองรับหลายตำแหน่ง เช่น Desktop/Mobile)
+  const cartIcons = document.querySelectorAll('.cart-count');
+
+  if (cartIcons.length > 0) {
+    cartIcons.forEach((icon) => {
+      icon.textContent = totalItems;
+    });
+  } else {
+    const cartIcon = document.getElementById('cart-count');
+    if (cartIcon) {
+      cartIcon.textContent = totalItems;
+    }
+  }
+  
+  // แจ้งเตือนใน Console ให้รู้ว่าอัปเดต UI แล้ว
+  console.log(`🔄 อัปเดต UI: ตอนนี้มีสินค้าทั้งหมด ${totalItems} ชิ้นในตะกร้า`);
+}
+
+// อัปเดตฟังก์ชัน addToCart เล็กน้อย เพื่อเรียกใช้ updateCartUI หลังจากเซฟ
+// โดยเข้าไปเติมบรรทัดนี้ต่อท้าย saveToLocalStorage() ใน addToCart
+
+// function addToCart(productID, productPrice) {
+//   ... ลอจิกเดิม ...
+//   saveToLocalStorage();
+//   console.log("📦 สถานะตะกร้าล่าสุด:", cart);
+//   
+//updateCartUI();
+// }

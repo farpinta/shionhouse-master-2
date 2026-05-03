@@ -86,11 +86,13 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <div class="card-stor">
-                                            <img src="assets/img/gallery/card.svg" alt="">
-                                            <span>0</span>
-                                        </div>
-                                    </li>
+                                         <a href="cart.html" style="display: block; cursor: pointer;">
+                                              <div class="card-stor">
+                                                  <img src="assets/img/gallery/card.svg" alt="Cart">
+                                                    <span id="cart-count">0</span>
+                                              </div>
+                                           </a>
+                                        </li>
                                 </ul>
                             </div>
                         </div>
@@ -818,7 +820,7 @@ var allProducts = Array();
  */
 async function requestProducts() {
     console.log("Initiating product request...");
-    const jsonPath = 'data/products.json';
+    const jsonPath = 'http://localhost:3000/api/products';
 
     try {
         // STEP 2: The fetch() call (Arrow from Script to Server/File)
@@ -862,7 +864,7 @@ function renderProducts(products) {
                     <div class="single-new-arrival mb-50 text-center">
                         <div class="popular-img">
                             <img src="${product.image_url}" alt="">
-                            <div class="favorit-items add-to-cart-link"  data-product-id="${product.id} data-product-price="${product.price}">
+                            <div class="favorit-items add-to-cart-link"  data-product-id="${product.id}" data-product-price="${product.price}">
                                 <img src="${product.favorit_icon}" alt="">
                             </div>
                         </div>
@@ -983,11 +985,6 @@ searchInput.addEventListener('input', debounce(() => {
     console.log("Search term changed to:", searchInput.value);
     updateFilteredUI();
 }, 700));
-
-
-
-
-
 
 </script>
 

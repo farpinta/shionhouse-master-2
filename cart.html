@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Shopping Cart | Shion House</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* แต่งปุ่ม + / - ให้ดูสวยเข้ากับธีม */
+        .qty-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid #8B8BFF;
+            background-color: white;
+            color: #8B8BFF;
+            font-weight: bold;
+            line-height: 1;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .qty-btn:hover {
+            background-color: #8B8BFF;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    
+    <main>
+        <div class="container mt-5 mb-5">
+            <a href="shop.html" class="btn btn-secondary mb-4">← Back to Shop</a>
+            <h2 class="mb-4">Shopping Cart (ตะกร้าสินค้าของคุณ)</h2>
+            
+            <!-- กล่องสำหรับโชว์ตารางสินค้า -->
+            <div id="cart-items-container">
+                <div class="text-center">กำลังโหลดข้อมูลตะกร้า...</div>
+            </div>
+
+            <!-- กล่องแสดงราคารวม -->
+            <div class="row mt-4">
+                <div class="col-12 text-right">
+                    <h3>Total (ราคารวม): $<span id="cart-total">0.00</span></h3>
+                    <button class="btn btn-primary mt-2" style="background: #8B8BFF; border: none;">Proceed to Checkout</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ฝัง cart.js ตัวเดิมไว้ด้วย เพื่อให้อัปเดตตัวเลข Navbar -->
+    <script src="cart.js"></script>
+
+    <script>
+        let allProductsCatalog = []; 
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const container = document.getElementById('cart-items-container');
+
+            try {
+                // ดึงข้อมูลสินค้าจาก Backend
+                const response = await fetch('http://localhost:3000/api/products');
+                if (!response.ok) throw new Error('Network response was not ok');
+                allProductsCatalog = await response.json();
+
+                renderCartTable();
+            } catch (error) {
+                console.error("Error loading product details:", error);
+                container.innerHTML = '<div class="alert alert-danger">เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์</div>';
+            }
+        });
+
+        function renderCartTable() {
+            const container = document.getElementById('cart-items-container');
+            const totalElement = document.getElementById('cart-total');
+
+            const savedCart = localStorage.getItem('ecommerce_cart');
+            const cartItems = savedCart ? JSON.parse(savedCart) : [];
+
+            if (cartItems.length === 0) {
+                container.innerHTML = '<div class="alert alert-info text-center py-4">ตะกร้าของคุณว่างเปล่า ไปเลือกสินค้ากันเลย!</div>';
+                totalElement.textContent = "0.00";
+                return;
+            }
+
+            let html = `
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center align-middle">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            
+            let totalPrice = 0;
+
+            cartItems.forEach(cartItem => {
+                const productDetail = allProductsCatalog.find(p => p.id == cartItem.id);
+                
+                if(productDetail) {
+                    const itemTotal = cartItem.price * cartItem.quantity;
+                    totalPrice += itemTotal;
+
+                    html += `
+                    <tr>
+                        <td><img src="${productDetail.image_url}" alt="${productDetail.name}" style="width: 80px; height: auto; border-radius: 5px;"></td>
+                        <td class="text-left"><strong>${productDetail.name}</strong></td>
+                        <td>$${cartItem.price.toFixed(2)}</td>
+                        <td>
+                            <!-- 🎯 จุดที่เปลี่ยน: ใส่ปุ่มลด (-) และเพิ่ม (+) ขนาบข้างตัวเลข -->
+                            <div class="d-flex justify-content-center align-items-center">
+                                <button class="qty-btn" onclick="updateQuantity('${cartItem.id}', -1)">-</button>
+                                <span class="mx-3" style="font-size: 18px; font-weight: bold;">${cartItem.quantity}</span>
+                                <button class="qty-btn" onclick="updateQuantity('${cartItem.id}', 1)">+</button>
+                            </div>
+                        </td>
+                        <td><strong>$${itemTotal.toFixed(2)}</strong></td>
+                        <td>
+                            <!-- ปุ่มลบสินค้าทั้งแถวทิ้งไปเลย -->
+                            <button class="btn btn-sm btn-danger" onclick="removeItem('${cartItem.id}')">Delete</button>
+                        </td>
+                    </tr>`;
+                }
+            });
+
+            html += '</tbody></table></div>';
+            
+            container.innerHTML = html;
+            totalElement.textContent = totalPrice.toFixed(2);
+        }
+
+        // 🎯 ฟังก์ชันเพิ่ม/ลด จำนวนทีละ 1 ชิ้น
+        function updateQuantity(productId, change) {
+            let currentCart = JSON.parse(localStorage.getItem('ecommerce_cart')) || [];
+            let itemIndex = currentCart.findIndex(item => item.id == productId);
+            
+            if (itemIndex > -1) {
+                // บวกลบค่าทีละ 1 (ตามค่า change ที่ส่งมา: 1 หรือ -1)
+                currentCart[itemIndex].quantity += change;
+                
+                // ถ้ากดลบ (-) จนจำนวนเหลือ 0 ก็ให้ลบสินค้านั้นทิ้งไปเลย
+                if (currentCart[itemIndex].quantity <= 0) {
+                    currentCart.splice(itemIndex, 1);
+                }
+                
+                updateAndSyncCart(currentCart);
+            }
+        }
+
+        // ฟังก์ชันลบสินค้าทิ้งเหมาหมด (เวลากดปุ่ม Delete สีแดง)
+        function removeItem(productId) {
+            let currentCart = JSON.parse(localStorage.getItem('ecommerce_cart')) || [];
+            currentCart = currentCart.filter(item => item.id != productId);
+            updateAndSyncCart(currentCart);
+        }
+
+        // เซฟข้อมูลลงตู้เซฟ และสั่งอัปเดตหน้าจอทั้งหมด
+        function updateAndSyncCart(newCartData) {
+            localStorage.setItem('ecommerce_cart', JSON.stringify(newCartData));
+            
+            if (typeof cart !== 'undefined') {
+                cart = newCartData; 
+                if (typeof updateCartUI === 'function') updateCartUI(); 
+            }
+
+            // สั่งวาดตารางใหม่ทันทีที่ตัวเลขเปลี่ยน
+            renderCartTable();
+        }
+    </script>
+</body>
+</html>
