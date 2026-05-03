@@ -15,6 +15,9 @@ const getProducts = (req, res) => {
                 // Convert both to lowercase to prevent case-sensitive errors (e.g., 'hoodie' vs 'Hoodie')
                 product.category.toLowerCase() === requestedCategory.toLowerCase()
             );
+            if (products.length === 0) {
+                return res.status(404).json({ message: "Category not found" });
+            }
         }
         
         // 4. Send back the Package (either all products or just the filtered ones) and a 200 OK Status
