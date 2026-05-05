@@ -1,0 +1,76 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Login | Fashion Template</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <!-- CSS here (ใช้ไฟล์เดิมทั้งหมดเพื่อให้ดีไซน์ไม่พัง) -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/slicknav.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/gijgo.css">
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <link rel="stylesheet" href="assets/css/animated-headline.css">
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/themify-icons.css">
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <link rel="stylesheet" href="assets/css/nice-select.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* CSS เสริมเล็กน้อยให้ฟอร์ม Login ดูสวยงามอยู่ตรงกลาง */
+        .login-section { padding: 100px 0; background-color: #f8f9fa; }
+        .login-card { background: #fff; padding: 40px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .error-msg { color: red; font-size: 14px; display: none; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <!-- Preloader Start -->
+    <!-- (ก็อปปี้ Preloader และ Header จาก shop.html มาใส่ตรงนี้ได้เลยเพื่อความสมบูรณ์ ยูนาขอข้ามเพื่อความกระชับนะคะ) -->
+
+    <main>
+        <!-- Login Area Start -->
+        <section class="login-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 col-md-8">
+                        <div class="login-card text-center">
+                            <h2 class="mb-4">Welcome Back</h2>
+                            <p class="mb-4">Please login to your account.</p>
+                            
+                            <!-- กล่องแสดง Error -->
+                            <div id="login-error" class="error-msg">Invalid email or password</div>
+
+                            <form id="login-form">
+                                <div class="form-group mb-3 text-left">
+                                    <input type="email" class="form-control" id="email" placeholder="Email Address" required>
+                                </div>
+                                <div class="form-group mb-4 text-left">
+                                    <input type="password" class="form-control" id="password" placeholder="Password" required>
+                                </div>
+                                <button type="submit" class="btn w-100" style="padding: 20px;">Login</button>
+                            </form>
+                            
+                            <p class="mt-4">Don't have an account? <a href="register.html" style="color: blue;">Sign up here</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Login Area End -->
+    </main>
+
+    <!-- Footer และ JS Scripts เหมือน shop.html -->
+    <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
+    <!-- ... ใส่ JS ของเทมเพลตให้ครบ ... -->
+    
+    <!-- สคริปต์สำหรับจัดการ Login -->
+    <script src="login.js"></script>
+</body>
+</html>

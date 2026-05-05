@@ -13,6 +13,7 @@ app.use(express.json());
 
 // Mount the product routes at the /api/products path
 app.use('/api/products', productRoutes);
+app.use(require('./auth'));
 
 // Start the server
 app.listen(PORT, () => {
