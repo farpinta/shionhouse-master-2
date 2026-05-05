@@ -58,5 +58,11 @@
     "username": "judy@example.com",
     "password": "0464f16b27e69f826359b04f7e2501a4",
     "date_of_registration": "2026-05-04T09:00:00Z"
+  },
+  {
+    "first_name": "Fatsai Pintakham9",
+    "username": "pintakhamfatsai@gmail.com",
+    "password": "$2b$10$U3IoNd8W3u.XnLrrOG2EOu2RTdnUrvacKqlOj2XgSXKxyizYT0Xzq",
+    "date_of_registration": "2026-05-05T16:13:49.540Z"
   }
 ]

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Shion House</title>
+    <style>
+        /* สไตล์พื้นฐานให้หน้าเว็บดูคล้ายหน้า Login เดิมของคุณฟาย */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9fafb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .register-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        p.subtitle {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+            outline: none;
+        }
+        input:focus {
+            border-color: #a87ffb; /* สีม่วงตอนคลิกพิมพ์ */
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #a87ffb; /* สีม่วงแบบเดียวกับหน้า Login */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #9061f9;
+        }
+        .error {
+            color: red;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        .login-link {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        .login-link a {
+            color: #0000ee;
+            text-decoration: none;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+        <h2>Create Account</h2>
+        <p class="subtitle">Please fill in the details to register.</p>
+
+        <!-- พื้นที่สำหรับโชว์ Error สีแดง (ID ตรงกับ register.js) -->
+        <div id="error-message" class="error"></div>
+
+        <!-- ฟอร์มสมัครสมาชิก (ID ตรงกับ register.js) -->
+        <form id="register-form">
+            <div class="form-group">
+                <input type="text" id="name" placeholder="Full Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" id="email" placeholder="Email Address (Username)" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" placeholder="Password (Min 8 chars, 1 Uppercase, 1 Symbol)" required>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+
+        <!-- ลิงก์กลับไปหน้า Login -->
+        <div class="login-link">
+            Already have an account? <a href="login.html">Login here</a>
+        </div>
+    </div>
+
+    <!-- ลิงก์ไปยังไฟล์ลอจิก JS ที่เราสร้างไว้ -->
+    <script src="register.js"></script>
+</body>
+</html>
