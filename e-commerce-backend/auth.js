@@ -114,4 +114,99 @@ router.post('/api/register', async (req, res) => {
     }
 });
 
+// POST /api/checkout - ระบบประมวลผลคำสั่งซื้อ (Checkout Flow)
+router.post('/api/checkout', async (req, res) => {
+    try {
+        // 1. แกะกล่องข้อมูลจาก Frontend (ผ่าน express.json())
+        const { cartItems, email, creditCard } = req.body;
+        
+        // สร้าง Object ไว้เก็บ Error แบบเจาะจงทีละฟิลด์
+        let errors = {};
+
+        // ==========================================
+        // ด่านที่ 1: SERVER-SIDE VALIDATION (ป้องกันข้อมูลเน่าเสีย)
+        // ==========================================
+
+        // 1.1 เช็คตะกร้าสินค้า (ต้องมีข้อมูลและไม่เป็นตะกร้าเปล่า)
+        if (!cartItems || !Array.isArray(cartItems) || cartItems.length === 0) {
+            errors.cartItems = "Cart cannot be empty.";
+        }
+
+        // 1.2 เช็ค Email ด้วย Regular Expression (Regex)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+            errors.email = "Invalid email format. Please provide a real email.";
+        }
+
+        // 1.3 เช็คบัตรเครดิต ต้องเป็นตัวเลข (Digit) 16 หลักเป๊ะๆ
+        const ccRegex = /^\d{16}$/;
+        if (!creditCard || !ccRegex.test(creditCard)) {
+            errors.creditCard = "Credit card must be exactly 16 digits.";
+        }
+
+        // ==========================================
+        // ด่านที่ 2: ตรวจสอบผล Validation และตีกลับถ้ามี Error
+        // ==========================================
+        // ถ้าระบุ Error ได้แม้แต่ 1 ข้อ ระบบจะเข้าเงื่อนไขนี้ทันที
+        if (Object.keys(errors).length > 0) {
+            // ส่ง Status 400 Bad Request กลับไป พร้อมระบุเจาะจงว่าผิดที่ฟิลด์ไหนบ้าง
+            // *CRITICAL*: การส่ง 400 กลับไป จะทำให้ Frontend รู้ว่า "ไม่สำเร็จ" 
+            // และ Frontend จะ "ไม่สั่งเคลียร์ตะกร้าสินค้า" ของผู้ใช้อย่างแน่นอนค่ะ!
+            return res.status(400).json({ 
+                message: "Checkout failed due to invalid data.", 
+                errors: errors 
+            });
+        }
+
+        // ==========================================
+        // ด่านที่ 3: คำนวณราคาสุทธิ (Calculations)
+        // ==========================================
+        // ทำไมต้องคำนวณที่ Backend? ป้องกันคนแฮ็กแก้ราคาของจากหน้าเว็บค่ะ!
+        let total = 0;
+        for (let item of cartItems) {
+            // สมมติว่าใน item มี .price (ราคา) และ .quantity (จำนวน)
+            if (item.price && item.quantity) {
+                total += (item.price * item.quantity);
+            }
+        }
+
+        // ==========================================
+        // ด่านที่ 4: บันทึกออเดอร์ลง Database (Persistence)
+        // ==========================================
+        // จำลองสถานการณ์: สร้าง Object เพื่อเตรียมเซฟ
+        const newOrder = {
+            email: email,
+            totalPrice: total,
+            status: "Paid",
+            date: new Date().toISOString()
+        };
+
+        // *สมมติว่าเกิดข้อผิดพลาดในการเซฟลงไฟล์หรือ Database*
+        // เราจะโยน (throw) Error เพื่อให้มันตกลงไปที่ Catch block (ลอจิก Atomicity)
+        const isSaveSuccess = true; // เปลี่ยนเป็น false เพื่อทดสอบให้ระบบพังได้ค่ะ
+        
+        if (!isSaveSuccess) {
+            throw new Error("Database timeout while saving order.");
+        }
+
+        // ถ้าผ่านด่านมาได้ทั้งหมด (All-or-Nothing) ส่ง 201 Created
+        // ตรงนี้แหละที่ Frontend จะได้รับสัญญาณแล้วสั่ง "ล้างตะกร้า (Clear Cart)"
+        return res.status(201).json({ 
+            message: "Order placed successfully!", 
+            totalCharged: total 
+        });
+
+    } catch (error) {
+        // จัดการ Error กรณีเซิร์ฟเวอร์พังตอนกำลังเซฟข้อมูล
+        console.error("Transaction Failed:", error.message);
+        
+        // ส่ง 500 (หรือ 400 ขึ้นอยู่กับการออกแบบ) เพื่อให้ Frontend รู้ว่าพัง 
+        // จะได้ไม่หักเงินและไม่เคลียร์ตะกร้าทิ้งค่ะ
+        return res.status(500).json({ 
+            message: "Internal Server Error. Order could not be saved.",
+            errors: { server: "Database connection failed" }
+        });
+    }
+});
+
 module.exports = router;
