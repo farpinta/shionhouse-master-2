@@ -121,3 +121,66 @@ function updateCartUI() {
 //   
 //updateCartUI();
 // }
+
+// 7. ระบบชำระเงิน (Checkout Flow) - ส่งข้อมูลไป Backend
+
+// ดึงปุ่ม Checkout มาใช้งาน (เมคชัวร์ว่าในไฟล์ HTML ของคุณมีปุ่มที่ใส่ id="checkout-btn" นะคะ)
+const checkoutBtn = document.getElementById('checkout-btn');
+
+if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', async () => {
+        // 1. ดึงข้อมูลตะกร้าสินค้าปัจจุบันจาก LocalStorage (ใช้ชื่อ key 'ecommerce_cart' ให้ตรงกับด้านบน)
+        const currentCart = JSON.parse(localStorage.getItem('ecommerce_cart')) || [];
+
+        if (currentCart.length === 0) {
+            alert('ตะกร้าของคุณยังว่างเปล่าค่ะ!');
+            return; // หยุดการทำงานถ้าไม่มีของ
+        }
+
+        // 2. เตรียมข้อมูล (Payload) ให้ตรงกับที่ Backend ต้องการ
+        // สำหรับการเทสเบื้องต้น เราดึงสินค้าชิ้นแรก (currentCart[0]) มาส่งก่อนนะคะ
+        const firstItem = currentCart[0]; 
+        
+        const orderPayload = {
+            user_id: 101, // สมมติว่า User ID เ
+            product_id: firstItem.id, // ดึง id จาก object ในตะกร้า
+            quantity: firstItem.quantity, // จำนวนชิ้น
+            total_price: (firstItem.price * firstItem.quantity) // ราคารวม
+        };
+
+        try {
+            // 3. ยิง Request ไปที่ Backend ของเรา
+            console.log('กำลังส่งข้อมูล Order ไปที่ Backend...', orderPayload);
+            
+            const response = await fetch('http://localhost:3000/api/checkout', {
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify(orderPayload) 
+            });
+
+            // 4. รอรับ Response กลับมาจาก Backend
+            const result = await response.json();
+
+            if (response.status === 201) {
+                // Happy Path: สั่งซื้อสำเร็จ!
+                alert(`🎉 สั่งซื้อสำเร็จ! หมายเลขคำสั่งซื้อของคุณคือ: ${result.order_id}`);
+                
+                // สิ่งที่ต้องทำหลังจากสั่งซื้อสำเร็จคือ "ล้างตะกร้า"
+                localStorage.removeItem('ecommerce_cart'); // ลบข้อมูลใน LocalStorage
+                cart = []; // ล้างตัวแปรใน memory
+                updateCartUI(); // อัปเดตตัวเลขตะกร้าให้เป็น 0
+                
+            } else {
+                // ติด Gatekeeper: ส่งข้อมูลไม่ครบ หรือจำนวนติดลบ
+                alert(`❌ เกิดข้อผิดพลาด: ${result.error}`);
+            }
+
+        } catch (error) {
+            // กรณี Backend ล่ม
+            console.error('ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้:', error);
+            alert('❌ ระบบขัดข้อง ไม่สามารถติดต่อเซิร์ฟเวอร์ได้ในขณะนี้');
+        }
+    });
+}
